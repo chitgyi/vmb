@@ -3,18 +3,18 @@ import 'package:vmb/src/base_vmb.dart';
 
 typedef VmbWidgetBuilder<T extends Vmb> = Widget Function(
   BuildContext context,
-  T Vmb,
+  T vmb,
   Widget? child,
 );
 
 class VmbBuilder<T, B extends Vmb<T>> extends StatefulWidget {
   const VmbBuilder(
-    this.Vmb, {
+    this.vmb, {
     Key? key,
     required this.builder,
     this.child,
   }) : super(key: key);
-  final B Vmb;
+  final B vmb;
   final Widget? child;
   final VmbWidgetBuilder<B> builder;
 
@@ -28,41 +28,41 @@ class _VmbBuilderState<T, B extends Vmb<T>> extends State<VmbBuilder<T, B>> {
   @override
   void initState() {
     super.initState();
-    widget.Vmb.onInit();
-    value = widget.Vmb.value;
-    widget.Vmb.addListener(_valueChanged);
+    widget.vmb.onInit();
+    value = widget.vmb.value;
+    widget.vmb.addListener(_valueChanged);
   }
 
   @override
   void didUpdateWidget(covariant VmbBuilder<T, B> oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.Vmb.value != widget.Vmb.value) {
-      oldWidget.Vmb.removeListener(_valueChanged);
+    if (oldWidget.vmb.value != widget.vmb.value) {
+      oldWidget.vmb.removeListener(_valueChanged);
       value = value;
-      widget.Vmb.addListener(_valueChanged);
+      widget.vmb.addListener(_valueChanged);
     }
   }
 
   @override
   void dispose() {
-    widget.Vmb.onDispose();
-    widget.Vmb.removeListener(_valueChanged);
+    widget.vmb.onDispose();
+    widget.vmb.removeListener(_valueChanged);
     super.dispose();
   }
 
   void _valueChanged() {
     setState(() {
-      value = widget.Vmb.value;
+      value = widget.vmb.value;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return VmbProvider<B>(
-      vmb: widget.Vmb,
+      vmb: widget.vmb,
       child: widget.builder(
         context,
-        widget.Vmb,
+        widget.vmb,
         widget.child,
       ),
     );
