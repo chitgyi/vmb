@@ -45,6 +45,8 @@ class MyVmb extends Vmb<String>{
 }
 ```
 
+![Screen Record](https://github.com/chitgyi/vmb/raw/main/screenshots/example.mp4 "Screen Record")
+
 ### Example One
 
 ```dart
