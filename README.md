@@ -2,6 +2,20 @@
 
 - This package is inspired by `ValueNotifier`, `InheritedWidget` and `ValueListenableBuilder`.
 
+### Installation
+
+```yml
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # add this line
+  vmb:
+    git:
+      url: https://github.com/chitgyi/vmb.git
+      ref: main
+```
+
 ### Usage
 
 `Vmb` abstract class is used to manage state same as `ChangeNotifier`.
@@ -46,6 +60,10 @@ class MyVmb extends Vmb<String>{
 ```
 
 ![Screen Record](https://github.com/chitgyi/vmb/raw/main/screenshots/example.mp4 "Screen Record")
+
+<video width="320" height="240" controls alt="Screen Record">
+  <source src="https://github.com/chitgyi/vmb/raw/main/screenshots/example.mp4" type="video/mp4">
+</video>
 
 ### Example One
 
