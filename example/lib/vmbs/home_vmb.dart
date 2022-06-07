@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vmb/vmb.dart';
 
-class HomeVmb<T> extends BaseVmb<T> {
+class HomeVmb<T> extends Vmb<T> {
   HomeVmb(T value) : super(value);
 
   @override

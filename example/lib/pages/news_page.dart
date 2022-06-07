@@ -1,4 +1,4 @@
-import 'package:example/viewmodels/news_view_model.dart';
+import 'package:example/vmbs/news_vmb.dart';
 import 'package:flutter/material.dart';
 import 'package:vmb/vmb.dart';
 
@@ -7,13 +7,13 @@ class NewsPages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final newsViewModel = NewsVmb(NewsState.loading());
+    final newsVmb = NewsVmb(NewsState.loading());
     return Scaffold(
       appBar: AppBar(
         title: const Text("News"),
       ),
       body: VmbBuilder<NewsState, NewsVmb>(
-        newsViewModel,
+        newsVmb,
         builder: (context, viewModel, child) {
           if (viewModel.value.viewState == ViewState.loading) {
             return const Center(

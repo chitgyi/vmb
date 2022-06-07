@@ -1,20 +1,20 @@
 import 'package:flutter/widgets.dart';
 import 'package:vmb/src/base_vmb.dart';
 
-typedef VmbWidgetBuilder<T extends BaseVmb> = Widget Function(
+typedef VmbWidgetBuilder<T extends Vmb> = Widget Function(
   BuildContext context,
-  T baseVmb,
+  T Vmb,
   Widget? child,
 );
 
-class VmbBuilder<T, B extends BaseVmb<T>> extends StatefulWidget {
+class VmbBuilder<T, B extends Vmb<T>> extends StatefulWidget {
   const VmbBuilder(
-    this.baseVmb, {
+    this.Vmb, {
     Key? key,
     required this.builder,
     this.child,
   }) : super(key: key);
-  final B baseVmb;
+  final B Vmb;
   final Widget? child;
   final VmbWidgetBuilder<B> builder;
 
@@ -22,68 +22,67 @@ class VmbBuilder<T, B extends BaseVmb<T>> extends StatefulWidget {
   State<VmbBuilder> createState() => _VmbBuilderState<T, B>();
 }
 
-class _VmbBuilderState<T, B extends BaseVmb<T>>
-    extends State<VmbBuilder<T, B>> {
+class _VmbBuilderState<T, B extends Vmb<T>> extends State<VmbBuilder<T, B>> {
   late T value;
 
   @override
   void initState() {
     super.initState();
-    widget.baseVmb.onInit();
-    value = widget.baseVmb.value;
-    widget.baseVmb.addListener(_valueChanged);
+    widget.Vmb.onInit();
+    value = widget.Vmb.value;
+    widget.Vmb.addListener(_valueChanged);
   }
 
   @override
   void didUpdateWidget(covariant VmbBuilder<T, B> oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.baseVmb.value != widget.baseVmb.value) {
-      oldWidget.baseVmb.removeListener(_valueChanged);
+    if (oldWidget.Vmb.value != widget.Vmb.value) {
+      oldWidget.Vmb.removeListener(_valueChanged);
       value = value;
-      widget.baseVmb.addListener(_valueChanged);
+      widget.Vmb.addListener(_valueChanged);
     }
   }
 
   @override
   void dispose() {
-    widget.baseVmb.onDispose();
-    widget.baseVmb.removeListener(_valueChanged);
+    widget.Vmb.onDispose();
+    widget.Vmb.removeListener(_valueChanged);
     super.dispose();
   }
 
   void _valueChanged() {
     setState(() {
-      value = widget.baseVmb.value;
+      value = widget.Vmb.value;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return VmbProvider<B>(
-      baseVmb: widget.baseVmb,
+      vmb: widget.Vmb,
       child: widget.builder(
         context,
-        widget.baseVmb,
+        widget.Vmb,
         widget.child,
       ),
     );
   }
 }
 
-class VmbProvider<B extends BaseVmb> extends InheritedWidget {
+class VmbProvider<B extends Vmb> extends InheritedWidget {
   const VmbProvider({
     super.key,
     required super.child,
-    required this.baseVmb,
+    required this.vmb,
   });
-  final B baseVmb;
+  final B vmb;
 
-  static B? of<B extends BaseVmb>(
+  static B? of<B extends Vmb>(
     BuildContext context,
   ) {
     final provider =
         context.dependOnInheritedWidgetOfExactType<VmbProvider<B>>();
-    return provider?.baseVmb;
+    return provider?.vmb;
   }
 
   @override

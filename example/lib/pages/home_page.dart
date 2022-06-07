@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:example/pages/news_page.dart';
-import 'package:example/viewmodels/home_view_model.dart';
+import 'package:example/vmbs/home_vmb.dart';
 import 'package:flutter/material.dart';
 import 'package:vmb/vmb.dart';
 
@@ -10,14 +10,14 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = HomeVmb<String>("HELLO");
+    final homeVmb = HomeVmb<String>("HELLO");
     return Scaffold(
       appBar: AppBar(
         title: const Text("News"),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          viewModel.value = String.fromCharCodes(
+          homeVmb.value = String.fromCharCodes(
             List.generate(
               10,
               (index) => Random().nextInt(index + 10),
@@ -30,12 +30,12 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.all(14.0),
         children: [
           VmbBuilder<String, HomeVmb<String>>(
-            viewModel,
-            builder: (context, viewModel, child) => Column(
+            homeVmb,
+            builder: (context, vmb, child) => Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Center(
-                  child: Text(viewModel.value),
+                  child: Text(vmb.value),
                 ),
                 const SizedBox(height: 14.0),
                 const ReflectableTextWidget(),
@@ -67,9 +67,9 @@ class ReflectableTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = VmbProvider.of<HomeVmb<String>>(
+    final homeVmb = VmbProvider.of<HomeVmb<String>>(
       context,
     );
-    return Text(viewModel?.value ?? "Default Value");
+    return Text(homeVmb?.value ?? "Default Value");
   }
 }

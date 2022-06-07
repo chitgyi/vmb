@@ -4,7 +4,7 @@ import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:vmb/vmb.dart';
 
-class NewsVmb extends BaseVmb<NewsState> {
+class NewsVmb extends Vmb<NewsState> {
   NewsVmb(super.value) {
     _loadNews();
   }
